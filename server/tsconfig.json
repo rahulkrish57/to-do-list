@@ -1,15 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Use the latest ECMAScript features
-    "module": "NodeNext", // Aligns with Node.js module resolution strategy
-    "moduleResolution": "NodeNext", // Required when using "module": "NodeNext"
-    "rootDir": "./", // Your root directory
-    "outDir": "./dist", // Where the compiled JavaScript files should go
-    "strict": true, // Enables all strict type-checking options
-    "esModuleInterop": true, // Enables compatibility with CommonJS modules
-    "skipLibCheck": true, // Skip type checking of declaration files
-    "forceConsistentCasingInFileNames": true // Ensure file casing consistency
-  },
-  "include": ["./**/*.ts"], // Include all TypeScript files in the project
-  "exclude": ["node_modules", "dist"] // Exclude these directories
+    "target": "ES6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true
+  }
 }
