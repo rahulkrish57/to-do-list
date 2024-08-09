@@ -1,6 +1,6 @@
 import React from "react";
 import "./Task.css";
-import { Form, FormGroup, Input } from "reactstrap";
+import { FormGroup, Input } from "reactstrap";
 import { MdSave, MdCancel } from "react-icons/md";
 interface TaskProps {
   id: string;

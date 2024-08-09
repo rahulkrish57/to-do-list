@@ -13,7 +13,10 @@ export const createList = async (req: Request, res: Response) => {
   try {
     const list = new List(updateData);
     await list.save();
-    res.status(201).json(list);
+    const total = await List.countDocuments();
+    const increment = total % 10 === 0 ? 0 : 1;
+    const totalPages = Math.trunc(total / 10) + increment;
+    res.status(201).json({ list, totalPages });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
@@ -26,11 +29,10 @@ export const getLists = async (req: Request, res: Response) => {
     const limit = 10;
     const skip = (page - 1) * limit;
     const listsPromise = List.find().sort({ cAt: -1 }).skip(skip).limit(limit);
-
     const totalPromise = List.countDocuments();
     const [lists, total] = await Promise.all([listsPromise, totalPromise]);
-
-    const totalPages = Math.ceil(total / limit);
+    const increment = total % 10 === 0 ? 0 : 1;
+    const totalPages = Math.trunc(total / 10) + increment;
 
     res.status(200).json({ totalPages, lists });
   } catch (error) {
@@ -45,13 +47,17 @@ export const updateList = async (req: Request, res: Response) => {
       uAt: new Date(),
       ...req.body,
     };
-    const list = await List.findByIdAndUpdate(req.params.id, updateData, {
+    const listsPromise = List.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
     });
+    const totalPromise = List.countDocuments();
+    const [list, total] = await Promise.all([listsPromise, totalPromise]);
+    const increment = total % 10 === 0 ? 0 : 1;
+    const totalPages = Math.trunc(total / 10) + increment;
     if (!list) {
       return res.status(404).json({ message: "List not found" });
     }
-    res.status(200).json({ message: "List updated" });
+    res.status(200).json({ totalPages, list });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

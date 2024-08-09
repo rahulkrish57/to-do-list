@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Container } from "reactstrap";
+import { Container } from "reactstrap";
 import HomeComp from "../components/home/HomeComp";
 
 const Home: React.FC = () => {

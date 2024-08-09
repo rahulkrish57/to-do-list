@@ -69,7 +69,7 @@ const HomeComp: React.FC = () => {
       }));
 
       dispatch(setTasks(taskData));
-      dispatch(setTotalPages(totalPages)); // Update totalPages in Redux state
+      dispatch(setTotalPages(totalPages));
     } catch (error) {
       console.error("Failed to fetch tasks", error);
     } finally {
@@ -79,18 +79,16 @@ const HomeComp: React.FC = () => {
 
   const handleAddTask = async () => {
     if (newTask.trim()) {
-      const body: Task = {
-        _id: String(Date.now()),
+      const body: any = {
         name: newTask,
         status: false,
       };
       try {
         const response = await apiService.addNewList(body);
-        const { data } = response;
-        if (data) {
-          dispatch(addTask(data));
-          setNewTask("");
-        }
+        const { totalPages, list } = response.data;
+        dispatch(addTask(list));
+        dispatch(setTotalPages(totalPages));
+        setNewTask("");
       } catch (error) {
         console.error("Failed to add new task", error);
       } finally {
@@ -270,35 +268,36 @@ const HomeComp: React.FC = () => {
           </Suspense>
         </Col>
       </Row>
-
-      <Row className="pagination">
-        <Col>
-          <Pagination>
-            <PaginationItem disabled={currentPage === 1}>
-              <PaginationLink
-                previous
-                onClick={() => handlePageChange(currentPage - 1)}
-              />
-            </PaginationItem>
-            {[...Array(totalPages)].map((_, i) => (
-              <PaginationItem
-                key={i + 1}
-                active={i + 1 === currentPage}
-                onClick={() => handlePageChange(i + 1)}
-              >
-                <PaginationLink>{i + 1}</PaginationLink>
+      {totalPages > 0 && !loading && (
+        <Row className="pagination">
+          <Col>
+            <Pagination>
+              <PaginationItem disabled={currentPage === 1}>
+                <PaginationLink
+                  previous
+                  onClick={() => handlePageChange(currentPage - 1)}
+                />
               </PaginationItem>
-            ))}
+              {[...Array(totalPages)].map((_, i) => (
+                <PaginationItem
+                  key={i + 1}
+                  active={i + 1 === currentPage}
+                  onClick={() => handlePageChange(i + 1)}
+                >
+                  <PaginationLink>{i + 1}</PaginationLink>
+                </PaginationItem>
+              ))}
 
-            <PaginationItem disabled={currentPage === totalPages}>
-              <PaginationLink
-                next
-                onClick={() => handlePageChange(currentPage + 1)}
-              />
-            </PaginationItem>
-          </Pagination>
-        </Col>
-      </Row>
+              <PaginationItem disabled={currentPage === totalPages}>
+                <PaginationLink
+                  next
+                  onClick={() => handlePageChange(currentPage + 1)}
+                />
+              </PaginationItem>
+            </Pagination>
+          </Col>
+        </Row>
+      )}
     </>
   );
 };
