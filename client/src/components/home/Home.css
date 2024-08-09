@@ -1,0 +1,40 @@
+.header {
+  flex-shrink: 0;
+  border-bottom: 1px solid #dadad2;
+}
+.pagination {
+  margin-top: 10px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.tasks {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-bottom: 1px solid #dadad2;
+  /* margin-bottom: 10px; */
+}
+/* Custom scrollbar styles */
+.tasks::-webkit-scrollbar {
+  width: 3px; /* width of the entire scrollbar */
+}
+
+.tasks::-webkit-scrollbar-track {
+  background: #f1f1f1; /* color of the track */
+}
+
+.tasks::-webkit-scrollbar-thumb {
+  background-color: #ccd5ff; /* color of the scrollbar thumb */
+  border-radius: 2px; /* roundness of the scrollbar thumb */
+}
+
+.tasks::-webkit-scrollbar-thumb:hover {
+  background-color: #aabbff; /* color of the scrollbar thumb when hovered */
+}
+
+/* Firefox scrollbar styles */
+.tasks {
+  scrollbar-width: thin; /* thin scrollbar for Firefox */
+  scrollbar-color: #ccd5ff #f1f1f1; /* color of the thumb and track for Firefox */
+}

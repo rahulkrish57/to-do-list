@@ -1,0 +1,38 @@
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #9b9b9b;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.task-card.completed {
+  background-color: #F6F6F4;
+  color: #9b9b9b;
+}
+
+.task-title {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.task-title.strikethrough {
+  text-decoration: line-through;
+}
+.button-class {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+.delete-button {
+  color: #ef233c;
+  margin-left: 10px;
+}
+.edit-button {
+  color: #48CAE4;
+  margin-left: 5px;
+}
